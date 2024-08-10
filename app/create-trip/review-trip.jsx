@@ -10,6 +10,8 @@ const ReviewTrip = () => {
 
   const { tripData } = useSelector((state) => state.createTrip);
 
+  const router = useRouter();
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -130,9 +132,9 @@ const ReviewTrip = () => {
           borderRadius: 15,
           marginTop: 40,
         }}
-        // onPress={() => {
-        //   router.push("/create-trip/review-trip");
-        // }}
+        onPress={() => {
+          router.replace("/create-trip/generate-trip");
+        }}
       >
         <Text
           style={{

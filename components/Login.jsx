@@ -11,6 +11,7 @@ const Login = () => {
       <Image
         source={require("../assets/images/login.jpeg")}
         style={{ width: "100%", height: 520 }}
+        resizeMode="cover"
       />
       <View style={styles.container}>
         <Text

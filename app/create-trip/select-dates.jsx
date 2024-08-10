@@ -51,7 +51,8 @@ const SelectDates = () => {
       updateTripData({
         ...tripData,
         dates: {
-          ...selectedDates,
+          startDate: selectedDates.startDate.toISOString(),
+          endDate: selectedDates.endDate.toISOString(),
           totalNoOfDays: totalNoOfDays + 1,
         },
       })
