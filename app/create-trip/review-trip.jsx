@@ -84,7 +84,7 @@ const ReviewTrip = () => {
         </Text>
         <FlatList
           data={tripDetails}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           ItemSeparatorComponent={() => <View style={{ padding: 10 }}></View>}
           renderItem={({ item, index }) => (
             <View

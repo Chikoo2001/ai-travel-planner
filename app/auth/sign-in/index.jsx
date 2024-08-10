@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
@@ -24,6 +25,8 @@ const SignIn = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     navigattion.setOptions({ headerShown: false });
   }, []);
@@ -39,11 +42,12 @@ const SignIn = () => {
       return;
     }
 
+    setLoading(true);
+
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // console.log(user);
         router.replace("/mytrip");
         // ...
       })
@@ -53,7 +57,8 @@ const SignIn = () => {
         if (errorCode == "auth/invalid-credential") {
           ToastAndroid.show("Invalid Credentials", ToastAndroid.BOTTOM);
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -143,18 +148,24 @@ const SignIn = () => {
           backgroundColor: Colors.PRIMARY,
           borderRadius: 15,
           marginTop: 50,
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        onPress={handleSignIn}
+        onPress={loading ? null : handleSignIn}
       >
-        <Text
-          style={{
-            color: Colors.WHITE,
-            textAlign: "center",
-            fontFamily: "outfit",
-          }}
-        >
-          Sign In
-        </Text>
+        {loading ? (
+          <ActivityIndicator size="small" color={Colors.WHITE} />
+        ) : (
+          <Text
+            style={{
+              color: Colors.WHITE,
+              textAlign: "center",
+              fontFamily: "outfit",
+            }}
+          >
+            Sign In
+          </Text>
+        )}
       </TouchableOpacity>
 
       {/* Create Account Button */}

@@ -73,7 +73,7 @@ const SelectTraveler = () => {
               setSelectedOption={setSelectedOption}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           ItemSeparatorComponent={() => <View style={{ padding: 10 }} />}
         />
       </View>

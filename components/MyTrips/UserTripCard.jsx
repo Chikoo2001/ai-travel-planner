@@ -5,9 +5,7 @@ import moment from "moment";
 
 const UserTripCard = ({ trip }) => {
   const tripData = trip?.tripData;
-  console.log(
-    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${tripData?.loactionInfo?.photoRef}&key=${process.env.EXPO_GOOGLE_MAPS_API_KEY}`
-  );
+
   return (
     <View
       style={{

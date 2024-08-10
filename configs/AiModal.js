@@ -11,7 +11,6 @@ const {
 } = require("@google/generative-ai");
 
 const apiKey = process.env.EXPO_GEMINI_API_KEY;
-console.log(apiKey);
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({

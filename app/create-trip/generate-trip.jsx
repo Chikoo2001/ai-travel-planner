@@ -31,9 +31,7 @@ const GenerateTrip = () => {
       .replace("{budget}", tripData?.tripBudget?.type)
       .replace("{totalDays}", tripData?.dates?.totalNoOfDays)
       .replace("{totalNights}", tripData?.dates?.totalNoOfDays - 1);
-    console.log(FINAL_AI_PROMPT);
     const result = await chatSession.sendMessage(FINAL_AI_PROMPT);
-    // console.log();
     const tripResponse = JSON.parse(result.response.text());
     setLoading(false);
 

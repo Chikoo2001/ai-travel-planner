@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
@@ -23,6 +24,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     navigattion.setOptions({ headerShown: false });
@@ -46,21 +49,21 @@ const SignUp = () => {
       );
       return;
     }
-
+    setLoading(true);
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        // console.log(user);
         router.replace("/mytrip");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // console.log(errorCode, errorMessage);
+        console.log(errorCode, errorMessage);
         // ..
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -189,19 +192,24 @@ const SignUp = () => {
           borderRadius: 15,
           marginTop: 20,
           borderWidth: 1,
-          //   borderColor: Colors.PRIMARY,
+          alignItems: "center",
+          justifyContent: "center",
         }}
         onPress={() => router.replace("auth/sign-in")}
       >
-        <Text
-          style={{
-            color: Colors.PRIMARY,
-            textAlign: "center",
-            fontFamily: "outfit",
-          }}
-        >
-          Sign In
-        </Text>
+        {loading ? (
+          <ActivityIndicator size="small" color={Colors.WHITE} />
+        ) : (
+          <Text
+            style={{
+              color: Colors.WHITE,
+              textAlign: "center",
+              fontFamily: "outfit",
+            }}
+          >
+            Sign Up
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );

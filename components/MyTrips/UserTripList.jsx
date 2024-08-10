@@ -3,9 +3,11 @@ import React from "react";
 import moment from "moment";
 import { Colors } from "../../constants/Colors";
 import UserTripCard from "./UserTripCard";
+import { useRouter } from "expo-router";
 
 const UserTripList = ({ userTrips }) => {
   const tripData = userTrips[0].tripData;
+  const router = useRouter();
   return (
     <View>
       <View
@@ -13,7 +15,7 @@ const UserTripList = ({ userTrips }) => {
           marginTop: 20,
         }}
       >
-        <Image
+        {/* <Image
           source={require("../../assets/images/placeholder.jpg")}
           style={{
             width: "100%",
@@ -21,7 +23,30 @@ const UserTripList = ({ userTrips }) => {
             objectFit: "cover",
             borderRadius: 10,
           }}
-        />
+        /> */}
+        {tripData?.locationInfo?.photoRef ? (
+          <Image
+            source={{
+              uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${tripData?.locationInfo?.photoRef}&key=${process.env.EXPO_GOOGLE_MAPS_API_KEY}`,
+            }}
+            style={{
+              width: "100%",
+              height: 240,
+              objectFit: "cover",
+              borderRadius: 10,
+            }}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/placeholder.jpg")}
+            style={{
+              width: "100%",
+              height: 240,
+              objectFit: "cover",
+              borderRadius: 10,
+            }}
+          />
+        )}
         <View style={{ marginTop: 10 }}>
           <Text
             style={{
@@ -55,7 +80,7 @@ const UserTripList = ({ userTrips }) => {
                 color: Colors.GREY,
               }}
             >
-              {` ${tripData?.tripType.desc}`}
+              {`${tripData?.tripType.icon} ${tripData?.tripType.desc}`}
             </Text>
           </View>
           <TouchableOpacity
@@ -65,6 +90,14 @@ const UserTripList = ({ userTrips }) => {
               borderRadius: 15,
               marginTop: 10,
             }}
+            onPress={() =>
+              router.push({
+                pathname: "/trip-details",
+                params: {
+                  tripData: JSON.stringify(userTrips[0]),
+                },
+              })
+            }
           >
             <Text
               style={{
@@ -82,7 +115,7 @@ const UserTripList = ({ userTrips }) => {
         <FlatList
           data={userTrips}
           renderItem={({ item, index }) => <UserTripCard trip={item} />}
-          keyExtractor={(item) => item.docId}
+          keyExtractor={(item, index) => index}
         />
       </View>
     </View>

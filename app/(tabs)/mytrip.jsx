@@ -23,8 +23,6 @@ const MyTrip = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(user);
-    // setLoading(true)
     user && getMyTrips();
   }, []);
 
@@ -37,7 +35,6 @@ const MyTrip = () => {
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, "=>", doc.data());
         setUserTrips((prev) => [...prev, doc.data()]);
       });
     } catch (err) {
@@ -78,8 +75,9 @@ const MyTrip = () => {
         </TouchableOpacity>
       </View>
 
-      {loading && <ActivityIndicator color={Colors.PRIMARY} size="large" />}
-      {userTrips?.length === 0 ? (
+      {loading ? (
+        <ActivityIndicator color={Colors.PRIMARY} size="large" />
+      ) : userTrips?.length === 0 ? (
         <StartNewTripCard />
       ) : (
         <UserTripList userTrips={userTrips} />

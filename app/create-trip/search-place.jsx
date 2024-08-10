@@ -34,8 +34,6 @@ const SearchPlace = () => {
         placeholder="Search place..."
         fetchDetails={true}
         onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
           dispatch(
             updateTripData({
               locationInfo: {
